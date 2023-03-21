@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from keras.callbacks import EarlyStopping
@@ -62,7 +63,7 @@ X_test = sc.fit_transform(x_test)
 #yapay sinir ağı
 es = EarlyStopping(monitor='val_loss', mode='min', verbose=2, patience=10)
 model1 = Sequential()
-model1.add(Dense(12, activation='relu', input_dim=22))
+model1.add(Dense(12,kernel_initializer = "uniform", activation='relu', input_dim=22))
 model1.add(Dense(12, activation='relu'))
 model1.add(Dense(1, activation='sigmoid'))
 model1.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
@@ -78,7 +79,7 @@ print('Test doğruluğu: {:.2f}%'.format(accuracy*100))
 
 #dropout ve regularizer ile overfitting durumu engelleme 
 model2 = Sequential()
-model2.add(Dense(12, activation='relu', input_dim=22, kernel_regularizer=regularizers.l2(0.001)))
+model2.add(Dense(12, kernel_initializer = "uniform", activation='relu', input_dim=22, kernel_regularizer=regularizers.l2(0.001)))
 model2.add(Dropout(0.2))
 model2.add(Dense(12, activation='relu',kernel_regularizer = regularizers.l2(0.001)))
 model2.add(Dropout(0.2))
